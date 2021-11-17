@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Board from "./components/Board";
+import InputNbrCards from "./components/InputNbrCards";
+import Score from "./components/Score";
 
-function App() {
+const App = () => {
+  const [nrbCards, setNrbCards] = useState(12);
+  const [currentScore, setCurrentScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
+  const [addScore, setAddScore] = useState(false);
+
+  useEffect(() => {
+    if (addScore) {
+      setCurrentScore(currentScore + 1);
+    }
+    setAddScore(false);
+  }, [addScore]);
+
+  useEffect(() => {
+    if (currentScore >= bestScore) {
+      setBestScore(currentScore);
+    }
+  }, [currentScore]);
+
+  const triggerCounter = () => {
+    setAddScore(true);
+  };
+
+  const resetScore = () => {
+    setCurrentScore(0);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Score currentScore={currentScore} bestScore={bestScore} />
+      <InputNbrCards
+        changeNbrCards={(n) => {
+          setNrbCards(n);
+        }}
+      />
+      <Board
+        nbrCards={nrbCards}
+        addScore={triggerCounter}
+        resetScore={resetScore}
+      />
     </div>
   );
-}
+};
 
 export default App;

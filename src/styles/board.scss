@@ -1,0 +1,12 @@
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  margin: 30px;
+
+  .card {
+    flex-basis: 15%;
+    margin: 10px;
+  }
+}
